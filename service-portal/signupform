@@ -72,8 +72,6 @@ const Signup = () => {
       <p>Your password should be between 8-20 characters.</p>
 
       <button type="submit" onClick={handleSubmit}>Sign Up</button>
-      <button className="google">Continue with Google</button>
-      <button className="facebook">Continue with Facebook</button>
       <p>Already have an account? <a href="#">Sign In</a></p>
     </div>
   );
