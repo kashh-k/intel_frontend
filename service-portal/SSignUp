@@ -1,28 +1,87 @@
-import React from 'react';
-import './add.css';
+import React, { useState } from 'react';
+
 const SSignUp = () => {
-    return(
-    <div className="container">
-        <h2>Sign Up</h2>
-        <label for="fname"><b>Company/Organisation Name</b></label>
-        <input type="text" placeholder="Enter Company/Organisation Name" name="fname" required/>
+    const [form, setForm] = useState({
+        companyName: '',
+        industry: '',
+        email: '',
+        phone: '',
+        password: '',
+    });
+    const [formErrors, setFormErrors] = useState({});
 
-        <label for="fname"><b>Company/Organisation Industry</b></label>
-        <input type="text" placeholder="Enter Industry" name="fname" required/>
+    const updateForm = (field, value) => {
+        setForm((prevForm) => ({ ...prevForm, [field]: value }));
+    };
 
-        <label for="email"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" required/>
+    const validateForm = () => {
+        const errors = {};
+        if (!form.companyName) {
+            errors.companyName = 'Company name is required';
+        }
+        if (!form.industry) {
+            errors.industry = 'Industry is required';
+        }
+        if (!form.email) {
+            errors.email = 'Email is required';
+        }
+        return errors;
+    };
 
-        <label for="phone"><b>Phone Number</b></label>
-        <input type="text" placeholder="Enter Phone Number" name="phone" required/>
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const errors = validateForm();
+        if (Object.keys(errors).length === 0) {
+            // Perform account creation (e.g., send API request)
+            console.log('Valid form data:', form);
+            // Clear the form:
+            setForm({
+                companyName: '',
+                industry: '',
+                email: '',
+                phone: '',
+                password: '',
+            });
+        } else {
+            setFormErrors(errors);
+        }
+    };
 
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required/>
-        <p>Your password should be between 8-20 characters.</p>
+    return (
+        <div className="container">
+            <h2>Sign Up</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label htmlFor="companyName">Company/Organisation Name:</label>
+                    <input
+                        type="text"
+                        id="companyName"
+                        name="companyName"
+                        required
+                        value={form.companyName}
+                        onChange={(e) => updateForm('companyName', e.target.value)}
+                    />
+                    {formErrors.companyName && <span className="error">{formErrors.companyName}</span>}
+                </div>
 
-        <button type="submit">Sign Up</button>
-        <p>Already have an account? <a href="#">Sign In</a></p>
-    </div>
+                <div className="form-group">
+                    <label htmlFor="industry">Company/Organisation Industry:</label>
+                    <input
+                        type="text"
+                        id="industry"
+                        name="industry"
+                        required
+                        value={form.industry}
+                        onChange={(e) => updateForm('industry', e.target.value)}
+                    />
+                    {formErrors.industry && <span className="error">{formErrors.industry}</span>}
+                </div>
+                <button type="submit">Sign Up</button>
+                <p>Already have an account? <a href="#">Sign In</a></p>
+            </form>
+        </div>
     );
 };
-export default SSignUp
+
+export default SSignUp;
+
