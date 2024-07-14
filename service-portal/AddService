@@ -1,25 +1,86 @@
-import React from 'react';
-import './add.css';
+import React, { useState } from 'react';
+
 const AddService = () => {
-    return(
-    <div className="container">
-        <h2>Add Service</h2>
-        <form action="/submit" method="post">
-            <label for="companyName">Company/Organization Name:</label>
-            <input type="text" id="companyName" name="companyName" required/>
+    const [form, setForm] = useState({
+        companyName: '',
+        serviceName: '',
+        serviceId: '',
+        serviceDescription: '',
+    });
+    const [formErrors, setFormErrors] = useState({});
 
-            <label for="serviceName">Service Name:</label>
-            <input type="text" id="serviceName" name="serviceName" required/>
+    const updateForm = (field, value) => {
+        setForm((prevForm) => ({ ...prevForm, [field]: value }));
+    };
 
-            <label for="serviceId">Service ID:</label>
-            <input type="text" id="serviceId" name="serviceId" required/>
+    const validateForm = () => {
+        const errors = {};
+        if (!form.companyName) {
+            errors.companyName = 'Company name is required';
+        }
+        if (!form.serviceName) {
+            errors.serviceName = 'Service name is required';
+        }
+        if (!form.serviceId) {
+            errors.serviceId = 'Service ID is required';
+        }
+        if (!form.serviceDescription) {
+            errors.serviceDescription = 'Service description is required';
+        }
+        return errors;
+    };
 
-            <label for="serviceDescription">Service Description:</label>
-            <input type="text" id="serviceDescription" name="serviceDescription" required/>
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const errors = validateForm();
+        if (Object.keys(errors).length === 0) {
+            console.log('Valid form data:', form);
+            setForm({
+                companyName: '',
+                serviceName: '',
+                serviceId: '',
+                serviceDescription: '',
+            });
+        } else {
+            setFormErrors(errors);
+        }
+    };
 
-            <button type="submit">Add Service</button>
-        </form>
-    </div>
-);
+    return (
+        <div className="container">
+            <h2>Add Service</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label htmlFor="companyName">Company/Organization Name:</label>
+                    <input
+                        type="text"
+                        id="companyName"
+                        name="companyName"
+                        required
+                        value={form.companyName}
+                        onChange={(e) => updateForm('companyName', e.target.value)}
+                    />
+                    {formErrors.companyName && <span className="error">{formErrors.companyName}</span>}
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="serviceName">Service Name:</label>
+                    <input
+                        type="text"
+                        id="serviceName"
+                        name="serviceName"
+                        required
+                        value={form.serviceName}
+                        onChange={(e) => updateForm('serviceName', e.target.value)}
+                    />
+                    {formErrors.serviceName && <span className="error">{formErrors.serviceName}</span>}
+                </div>
+
+                <button type="submit">Add Service</button>
+            </form>
+        </div>
+    );
 };
-export default AddService
+
+export default AddService;
+
