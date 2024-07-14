@@ -1,0 +1,34 @@
+import React from 'react';
+import './add.css';
+const SSignUp = () => {
+    return(
+    <div className="container">
+        <h2>Sign Up</h2>
+        <label for="fname"><b>Company/Organisation Name</b></label>
+        <input type="text" placeholder="Enter Full Name" name="fname" required/>
+
+        <label for="fname"><b>Company/Organisation Address</b></label>
+        <input type="text" placeholder="Enter Full Name" name="fname" required/>
+
+        <label for="fname"><b>Year of Establishment</b></label>
+        <input type="text" placeholder="Enter Full Name" name="fname" required/>
+
+        <label for="fname"><b>Type of Service Provided</b></label>
+        <input type="text" placeholder="Enter Full Name" name="fname" required/>
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" name="email" required/>
+
+        <label for="phone"><b>Phone Number</b></label>
+        <input type="text" placeholder="Enter Phone Number" name="phone" required/>
+
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" required/>
+        <p>Your password should be between 8-20 characters.</p>
+
+        <button type="submit">Sign Up</button>
+        <p>Already have an account? <a href="#">Sign In</a></p>
+    </div>
+    );
+};
+export default SSignUp
